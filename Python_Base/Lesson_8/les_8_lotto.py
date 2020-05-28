@@ -85,33 +85,31 @@ class Game:
     def __init__(self, card1, card2):
         self.card1 = card1
         self.card2 = card2
-        self.result1 = card1
-        self.result2 = card2
+        self.result1 = card1.card.copy()
+        self.result2 = card2.card.copy()
         self.all_num = [i for i in range(1, 91)]
         self.exit = True
         
     def fail(self, ans, num):
-        if ans.lower() == 'y' and num not in self.result1.card:
+        if ans.lower() == 'y' and num not in self.result1:
             exit = False
             print('Не надо было вычеркивать. Вы проиграли!')
-        elif ans.lower() == 'n' and num in self.result1.card:
+        elif ans.lower() == 'n' and num in self.result1:
             print('Надо было вычеркивать. Вы проиграли!')
             exit = False
         elif ans != 'n' and ans != 'y':
             print(f'Вы решили покинуть игру...')
             exit = False
         else:
-            if num in self.result1.card:
-                self.result1.card.remove(num)
-            if num in self.result2.card:
-                self.result2.card.remove(num)
-            exit = Trueprint("\033[%d;%dH" % (1, 1))
+            if num in self.result1:
+                self.result1.remove(num)
+            if num in self.result2:
+                self.result2.remove(num)
+            exit = True
         return exit
     
     def start(self):
-#        os.system('clear')
         print('\n' * 100)
-        print('\033[H')
         user_choice  = input('Начнем? y/n (все остальное для выхода) ')
         if user_choice == 'y':
             exit = True
@@ -120,8 +118,12 @@ class Game:
         while exit:
             print('\n' * 100)
             print("\033[%d;%dH" % (1, 1))
-#            os.system('clear')
-            #print(self.all_num)
+            if len(self.result1) == 0:
+                print("Большая Человеческая Победа!!!")
+                break
+            if len(self.result2) == 0:
+                print("Восстание машин закончилось их победой...")
+                break
             choosed_number = random.choice(self.all_num)
             self.all_num.remove(choosed_number)
             print(f'Новый бочонок: {choosed_number} (осталось {len(self.all_num)})')
