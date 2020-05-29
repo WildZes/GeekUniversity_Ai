@@ -57,22 +57,15 @@
 """
 import random
 import os
-import time
+import copy
 
 class Card:
     def __init__(self):
-        self.card = random.sample([i for i in range(1, 91)], 15)
+        spam = random.sample([i for i in range(1, 91)], 15)
+        self.card = [sorted(spam[i:i + 5]) for i in range(0, len(spam), 5)]
         
     def __str__(self):
-        out_string = ''
-        index = 1
-        for i in self.card:
-            if index % 5 != 0:
-                out_string += str(i) + ' '
-            else:
-                out_string += str(i) + '\n'
-            index += 1
-        return out_string.strip('\n')
+        return '\n'.join(' '.join(map(str, line)) for line in self.card)
         
 #player = Card()
 #computer = Card()
@@ -85,30 +78,33 @@ class Game:
     def __init__(self, card1, card2):
         self.card1 = card1
         self.card2 = card2
-        self.result1 = card1.card.copy()
-        self.result2 = card2.card.copy()
+        self.result1 = copy.deepcopy(card1)
+        self.result2 = copy.deepcopy(card2)
         self.all_num = [i for i in range(1, 91)]
         self.exit = True
         
     def fail(self, ans, num):
-        if ans.lower() == 'y' and num not in self.result1:
+        if ans.lower() == 'y' and all(num not in line for line in self.result1.card):
             exit = False
             print('Не надо было вычеркивать. Вы проиграли!')
-        elif ans.lower() == 'n' and num in self.result1:
+        elif ans.lower() == 'n' and any(num in line for line in self.result1.card):
             print('Надо было вычеркивать. Вы проиграли!')
             exit = False
         elif ans != 'n' and ans != 'y':
             print(f'Вы решили покинуть игру...')
             exit = False
         else:
-            if num in self.result1:
-                self.result1.remove(num)
-            if num in self.result2:
-                self.result2.remove(num)
+            for line in self.result1.card:
+                if num in line:
+                    line.remove(num)
+            for line in self.result2.card:
+                if num in line:
+                    line.remove(num)
             exit = True
         return exit
     
     def start(self):
+        st_res1, st_res2 = self.result1.card, self.result2.card
         print('\n' * 100)
         user_choice  = input('Начнем? y/n (все остальное для выхода) ')
         if user_choice == 'y':
@@ -117,17 +113,15 @@ class Game:
             exit = False
         while exit:
             print('\n' * 100)
-            print("\033[%d;%dH" % (1, 1))
-            if len(self.result1) == 0:
+            if len(st_res1[0]) + len(st_res1[1]) + len(st_res1[2]) == 0:
                 print("Большая Человеческая Победа!!!")
                 break
-            if len(self.result2) == 0:
+            if len(st_res2[0]) + len(st_res2[1]) + len(st_res2[2]) == 0:
                 print("Восстание машин закончилось их победой...")
                 break
             choosed_number = random.choice(self.all_num)
             self.all_num.remove(choosed_number)
             print(f'Новый бочонок: {choosed_number} (осталось {len(self.all_num)})')
-            #print(self.all_num)
             self.output()
             user_choice = input('Вычеркиваем? y/n (все остальное для выхода) ')
             exit = self.fail(user_choice, choosed_number)   
@@ -141,7 +135,6 @@ class Game:
         print(self.card2)
         print('Результат компьютера')
         print(self.result2)
-
-            
+          
 game = Game(Card(), Card())
 game.start()
