@@ -56,7 +56,6 @@
 модуль random: http://docs.python.org/3/library/random.html
 """
 import random
-import os
 import copy
 
 class Card:
@@ -66,13 +65,7 @@ class Card:
         
     def __str__(self):
         return '\n'.join(' '.join(map(str, line)) for line in self.card)
-        
-#player = Card()
-#computer = Card()
-#print(player)
-#print('*' * 50)
-#print(computer)
-#input('pause')
+
 
 class Game:
     def __init__(self, card1, card2):
