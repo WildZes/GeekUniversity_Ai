@@ -1,0 +1,87 @@
+.menu li a:hover {
+    color: pink;
+}
+
+input[placeholder="Ваша электронная почта для ответа"]:focus {
+    color: red;
+    background: lightblue;
+}
+
+.techprop {
+    border: 1px solid #000;
+}
+
+.techprop td {
+    border: 1px solid #000;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td[colspan="2"] {
+    text-align: center;
+}
+
+body {
+    background-color: #f8f8f8;
+}
+
+li {
+    font-style: italic;
+    font-size: 20px;
+    list-style-type: none;
+}
+
+li a {
+    color: #8B00FF;
+}
+
+.shortcharfull {
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+    background: #eaeaea;
+}
+
+h4 {
+    background: #eaeaea;
+}
+
+.short {
+    color: #707070;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 16px;
+}
+
+.full {
+    color: #484343;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.char {
+    font-style: bold;
+    color: blue;
+    font-size: 15px;
+    line-height: 24px;
+    border: 4px double black;
+}
+
+input[type="text"] {
+    color: #8B00FF;
+    font-size: 16px;
+    font-weight: 1;
+    text-transform: capitalize;
+}
+
+textarea[name="text"] {
+    color: #8B00FF;
+    font-size: 16px;
+    font-weight: 1;
+    text-transform: capitalize;
+}
