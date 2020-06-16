@@ -1,0 +1,68 @@
+.container {
+    width: 100%;
+    height: 200px;
+    background-color: #ccc;
+    margin: 0 auto;
+}
+
+.header {
+    height: 100px;
+    background-color: red;
+}
+
+.logo img{
+    width: 50px;
+}
+
+.menu li{
+    display: inline;
+    list-style-type: none;
+}
+
+.logo {
+    float: left;
+}
+
+.menu {
+    float: right;
+}
+
+.footer {
+    background-color: lightblue;
+    height: 50px;
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.content img {
+    float: left;
+}
+
+.position {
+    clear: both;
+}
+
+.marketdata li {
+    list-style-position: inside;
+}
+
+.footer {
+    clear: both;
+}
+
+input[type="button"]:hover {
+    color: black;
+    background-color: white;
+}
+
+input[type="button"]:active {
+        box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                             inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+.marketcontent > div {
+    border: 2px solid black;
+    float: left;
+}
+
