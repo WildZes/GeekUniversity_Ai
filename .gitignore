@@ -1,2 +1,4 @@
 /Python_libs_for_Data_Science_part_1/.ipynb_checkpoints/
 /Python_libs_for_Data_Science_part_1/creditcard.csv
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
