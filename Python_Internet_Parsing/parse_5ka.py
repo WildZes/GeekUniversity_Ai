@@ -2,21 +2,7 @@ import json
 import time
 from pathlib import Path
 import requests
-
-"""
-1xx
-2xx
-3xx
-4xx
-5xx
-"""
-
-"""
-GET
-POST
-PATCH
-DELETE
-"""
+import os
 
 
 class ParseError(Exception):
@@ -53,7 +39,7 @@ class Parse5ka:
         for product in self.parse(self.start_url, self._params):
             file_path = self.result_path.joinpath(f'{product["id"]}.json')
             self.save(product, file_path)
-        self.gimme_cat()
+        self.gimme_cat(self._params)
 
     def parse(self, url: str, params: dict) -> dict:
         while url:
@@ -70,18 +56,24 @@ class Parse5ka:
         with file_path.open("w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False)
             
-    @staticmethod
-    def add_to_file(data: dict, file_path: Path):
-        with file_path.open('a', encoding='utf-8') as file:
-            json.dump(data, file, ensure_ascii=False)
-            
-    def gimme_cat(self):
-        data = requests.get('https://5ka.ru/api/v2/categories/').json()
-        for _, value in enumerate(data):
-            self._params['categories'] = value['parent_group_code']
-            for product in self.parse("https://5ka.ru/api/v2/special_offers/", self._params):
-                file_path = self.result_path.parent.joinpath(f'categories/{self._params["categories"]}.json')
-                self.add_to_file(product, file_path)
+    def gimme_cat(self, params: dict):
+        categories = self.__get_response('https://5ka.ru/api/v2/categories/',
+                                         params=self._params,
+                                         headers=self._headers).json()
+        for _, value in enumerate(categories):
+            params['categories'] = value['parent_group_code']
+            file_path = self.result_path.parent.joinpath(f'categories/{self._params["categories"]}.json')
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            data = {}
+            products = []
+            for product in self.parse(self.start_url, params):
+                products.append(product)
+            data['name'] = value['parent_group_name']
+            data['code'] = value['parent_group_code']
+            data['products'] = products
+            if products:
+                self.save(data, file_path)
 
 if __name__ == "__main__":
     url = "https://5ka.ru/api/v2/special_offers/"
