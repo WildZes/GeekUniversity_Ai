@@ -67,5 +67,5 @@ class AutoyoulaSpider(scrapy.Spider):
         data['spec'] = spec_dic
         data['seller'] = user_link
 
-        data_portion = pymongo.MongoClient(data_base_url)["youla"]
-        data_portion.insert_one(data)
+        data_portion = pymongo.MongoClient(data_base_url)
+        data_portion["youla"].insert_one(data)
