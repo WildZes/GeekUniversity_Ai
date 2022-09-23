@@ -56,7 +56,7 @@ pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
 pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
 Pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1602493092676/work
 prompt-toolkit @ file:///Users/ktietz/demo/mc3/conda-bld/prompt-toolkit_1629146841569/work
-protobuf==3.18.1
+protobuf==3.18.3
 ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
